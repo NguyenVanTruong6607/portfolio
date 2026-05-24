@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Nguyễn Văn Trường (25022039)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00ffff;
+            --secondary-color: #0099ff;
+            --text-dark: #f0f7ff;
+            --text-light: #b3d9ff;
+            --bg-light: rgba(5, 15, 35, 0.95);
+            --bg-white: rgba(8, 18, 40, 0.96);
+            --border-color: rgba(0, 255, 255, 0.25);
+            --accent-color: #ff00ff;
+        }
+
+        html, body { height: 100%; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            position: relative;
+            background:
+                radial-gradient(circle at top left, rgba(0, 255, 255, 0.1), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(0, 153, 255, 0.12), transparent 24%),
+                linear-gradient(135deg, #050f23 0%, #0a1428 45%, #0f1d3a 100%);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+
+        /* subtle animated blobs to create 'liquid' feel */
+        .liquid-blob {
+            display: none; /* hidden when using white background */
+        }
+
+        .liquid-blob.right { right: -80px; top: 20%; }
+        .liquid-blob.left { left: -120px; bottom: 10%; background: radial-gradient(circle at 70% 70%, rgba(255,255,255,0.12), rgba(155,89,255,0.06) 40%, transparent 60%); }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) scale(1); }
+            50% { transform: translateY(-18px) translateX(6px) scale(1.05); }
+            100% { transform: translateY(0) translateX(0) scale(1); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2; /* above overlay */
+        }
+
+        /* Full-screen translucent glass overlay to create transparent liquid glass effect */
+        .liquid-overlay { display: none; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(5, 18, 40, 0.5), rgba(10, 30, 70, 0.5)), url('ai-brain.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+            color: #ffffff;
+            padding: 140px 0;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0, 255, 255, 0.3), inset 0 0 30px rgba(0, 150, 200, 0.1);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.6);
+            position: relative;
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 200, 255, 0.08) 0%, rgba(0, 100, 180, 0.04) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.8;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 
+                        0 0 40px rgba(0, 0, 0, 0.7),
+                        0 0 8px rgba(0, 255, 255, 0.5),
+                        0 2px 6px rgba(0, 0, 0, 0.9);
+            -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
+            display: block;
+            text-align: center;
+        }
+
+        header h1 br {
+            display: block;
+            content: "";
+        }
+
+        header .name {
+            display: none;
+        }
+
+        header .student-id {
+            display: none;
+        }
+
+        header .major {
+            display: none;
+        }
+
+        header p {
+            display: none;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.6);
+            margin-top: 15px;
+        }
+
+        .header-info-item {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .header-credit {
+            position: absolute;
+            bottom: 20px;
+            right: 25px;
+            font-size: 0.7rem;
+            color: rgba(150, 200, 255, 0.65);
+            text-align: right;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+            line-height: 1.4;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, rgba(5, 15, 35, 0.92), rgba(10, 25, 50, 0.92));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 4px 25px rgba(0, 200, 255, 0.2), inset 0 1px 0px rgba(0, 255, 255, 0.1);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.25);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #c0deff;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1.08rem;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, #0099ff);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            background: rgba(6, 12, 28, 0.92);
+            margin-top: 0;
+            border-radius: 0;
+            box-shadow: inset 0 2px 20px rgba(0, 255, 255, 0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        section {
+            padding: 70px 60px;
+            border-bottom: 2px solid rgba(0, 200, 255, 0.12);
+            background: linear-gradient(180deg, rgba(6, 12, 28, 0.92) 0%, rgba(8, 18, 40, 0.95) 100%);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 3px solid rgba(0, 200, 255, 0.4);
+            padding-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+            letter-spacing: 0.5px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 40px;
+            background: linear-gradient(180deg, #00ffff 0%, #0099ff 100%);
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        h3 {
+            font-size: 1.7rem;
+            color: #ffffff;
+            margin: 25px 0 15px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #d9ebff;
+            font-size: 1.1rem;
+        }
+
+        .intro-quote {
+            margin: 10px 0 18px auto;
+            padding: 12px 16px;
+            border-left: 5px solid #00ffff;
+            background: rgba(0, 255, 255, 0.12);
+            font-style: italic;
+            color: #e6f2ff;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.96rem;
+            line-height: 1.7;
+            max-width: 70%;
+            text-align: right;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.08);
+        }
+
+        strong {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        /* Introduction Section */
+        .intro-content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .intro-image {
+            width: 240px;
+            height: 380px;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0, 255, 255, 0.2);
+            border: 2px solid rgba(0, 255, 255, 0.25);
+            object-fit: cover;
+        }
+
+        .intro-text {
+            display: block;
+        }
+
+        .intro-right-section {
+            display: contents;
+        }
+
+        .info-box {
+            background: rgba(12, 20, 38, 0.92);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            border: 1px solid rgba(120,160,255,0.14);
+            position: relative;
+            z-index: 1;
+            grid-column: 1 / -1;
+            margin-top: 15px;
+        }
+
+        .info-box h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-item {
+            background: rgba(10, 20, 40, 0.95);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            color: #d9ebff;
+        }
+
+        .info-item strong {
+            display: block;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            grid-column: 1 / -1;
+            margin-top: 25px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #00ffff, #0099ff);
+            color: #001a3a;
+            padding: 8px 14px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            text-align: center;
+        }
+
+        /* Accordion Styles */
+        .accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .accordion-item {
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: rgba(10, 20, 40, 0.88);
+        }
+
+        .accordion-item:hover {
+            border-color: #00ffff;
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.25);
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, rgba(0, 100, 150, 0.15), rgba(0, 200, 255, 0.08));
+            padding: 12px 20px 20px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            transition: all 0.3s ease;
+            border-left: 5px solid #00ffff;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #00ffff, #0099ff);
+            color: #001a3a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.15), rgba(0, 150, 255, 0.12));
+        }
+
+        .accordion-header.active {
+            background: linear-gradient(135deg, #00ffff, #0099ff);
+            color: #001a3a;
+        }
+
+        .accordion-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+            color: inherit;
+        }
+
+        .accordion-question {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .accordion-header.active .accordion-question {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .accordion-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            color: #00ffff;
+        }
+
+        .accordion-header.active .accordion-toggle {
+            transform: rotate(180deg);
+            color: #001a3a;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(12, 20, 38, 0.92);
+        }
+
+        /* Glass/card style used for previously white backgrounds */
+        .glass {
+            background: rgba(12, 20, 38, 0.92);
+            border: 1px solid rgba(120,160,255,0.16);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+            color: var(--text-light);
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-body {
+            padding: 30px;
+            border-top: 2px solid rgba(0, 255, 255, 0.15);
+        }
+
+        .accordion-body h4 {
+            color: var(--primary-color);
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .accordion-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .accordion-body ul {
+            list-style-position: inside;
+            margin: 15px 0;
+            color: #d9ebff;
+        }
+
+        .accordion-body li {
+            margin-bottom: 10px;
+            margin-left: 20px;
+        }
+
+        .accordion-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        /* Projects/Assignments Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(0, 100, 150, 0.1), rgba(0, 50, 100, 0.08));
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-left: 5px solid #00ffff;
+            padding: 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 35px rgba(0, 255, 255, 0.25);
+            border-color: #00ffff;
+        }
+
+        .project-number {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .project-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .project-card p {
+            margin: 0;
+        }
+
+        .project-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 255, 255, 0.15);
+        }
+
+        .project-details ul {
+            list-style-position: inside;
+            color: #d9ebff;
+        }
+
+        .project-details li {
+            margin-bottom: 8px;
+        }
+
+        .summary-content {
+            background: linear-gradient(135deg, rgba(0, 180, 240, 0.25), rgba(0, 100, 180, 0.2));
+            color: #ffffff;
+            padding: 60px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 200, 255, 0.2), inset 0 1px 1px rgba(0, 255, 255, 0.15);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .summary-content h3 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin-bottom: 35px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .summary-content p {
+            color: #e0f0ff;
+            font-size: 1.08rem;
+            margin-bottom: 25px;
+            line-height: 2;
+        }
+
+        .reflection-box {
+            background: rgba(8, 20, 45, 0.7);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #00ffff;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            backdrop-filter: blur(8px);
+            box-shadow: inset 0 1px 1px rgba(0, 255, 255, 0.1);
+        }
+
+        .reflection-box strong {
+            color: #00ffff;
+            font-size: 1.05rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-block;
+            background: rgba(0, 100, 150, 0.2);
+            color: #e6f2ff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            font-weight: 600;
+        }
+
+        .contact-link:hover {
+            background: rgba(0, 209, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: rgba(7, 17, 31, 0.9);
+            color: white;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+        }
+
+        footer p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 15px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            header .name {
+                font-size: 1.2rem;
+            }
+
+            .intro-content {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                gap: 15px;
+                font-size: 0.95rem;
+            }
+
+            section {
+                padding: 40px 25px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accordion-header {
+                padding: 15px;
+            }
+
+            .accordion-title {
+                font-size: 1.1rem;
+            }
+
+            .accordion-body {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header .name {
+                font-size: 1.1rem;
+            }
+
+            header .student-id {
+                font-size: 0.95rem;
+            }
+
+            nav a {
+                font-size: 0.9rem;
+            }
+
+            section {
+                padding: 25px 15px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 25px;
+            }
+
+            .accordion-header {
+                padding: 12px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .accordion-toggle {
+                position: absolute;
+                right: 12px;
+                top: 12px;
+            }
+
+            .highlights {
+                justify-content: center;
+            }
+        }
+
+        /* Page Navigation */
+        .pages-container {
+            min-height: calc(100vh - 500px);
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            margin-top: 40px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .pagination-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        }
+
+        .pagination-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .pagination-info {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .pagination-info span {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .pagination {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .pagination-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="liquid-blob left" aria-hidden="true"></div>
+    <div class="liquid-blob right" aria-hidden="true"></div>
+    <div class="liquid-overlay" aria-hidden="true"></div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Portfolio Kỹ thuật số<br>Nhập môn công nghệ số và ứng dụng trí tuệ nhân tạo</h1>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#" onclick="showPage(1); return false;">📋 Giới Thiệu</a></li>
+                <li><a href="#" onclick="showPage(2); return false;">📁 Bài Tập</a></li>
+                <li><a href="#" onclick="showPage(3); return false;">🎓 Tổng Kết</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="pages-container">
+            <!-- Page 1: Introduction -->
+            <div class="page active" id="page-1">
+                <!-- Introduction Section -->
+                <section id="introduction">
+            <blockquote class="intro-quote">
+                Tổng hợp các kỹ năng, kiến thức và dự án học tập từ các môn học khác nhau. Đây là nơi trình bày những bài tập đã hoàn thành và các bài học quý báu.
+            </blockquote>
+            <h2>Giới Thiệu Bản Thân</h2>
+            <div class="intro-content">
+                <img src="picture.png" alt="Avatar" class="intro-image">
+                <div class="intro-text">
+                    <h3>Tôi là ai?</h3>
+                    <p>
+                        Xin chào, tôi là <strong>Nguyễn Văn Trường (25022039)</strong> – sinh viên ngành Khoa học Máy tính, trường Đại học Công Nghệ-ĐHQGHN, với tư duy đổi mới và định hướng ứng dụng thực tế. Đối với tôi, công nghệ không chỉ là lý thuyết trên trang giấy mà là công cụ mạnh mẽ để giải quyết các bài toán thực tiễn. Vì vậy, tôi luôn chú trọng việc chuyển hóa kiến thức giảng đường thành các giải pháp cụ thể thông qua từng bài tập dự án.
+                    </p>
+                    <p>
+                        Thời gian qua, tôi đã tập trung xây dựng nền tảng tư duy logic vững chắc và làm chủ các kỹ năng cốt lõi: từ tối ưu hóa cấu trúc dữ liệu, vận hành công cụ cộng tác nhóm, đến nghiên cứu ứng dụng AI tạo sinh một cách có trách nhiệm. Mỗi thử thách đều là cơ hội để tôi rèn luyện phong cách làm việc kỷ luật, chuyên nghiệp và có hệ thống.
+                    </p>
+                    <p>
+                        Với tinh thần của một "Lifelong Learner", tôi luôn nhạy bén với các xu hướng mới và không ngại bước ra khỏi vùng an toàn. Tôi tin rằng sự kết hợp giữa tư duy phân tích hệ thống và năng lực tự học chủ động sẽ giúp tôi thích ứng nhanh chóng trong kỷ nguyên số.
+                    </p>
+                    <p>
+                        Portfolio này không chỉ là tập hợp các bài báo cáo học thuật, mà là minh chứng sống động phản ánh năng lực thực hành, kỹ năng phối hợp và tư duy kỹ thuật của tôi. Đây là những bước đi đầu tiên trên hành trình khẳng định giá trị, sẵn sàng mang tinh thần trách nhiệm này đóng góp vào các dự án công nghệ tương lai.
+                    </p>
+                </div>
+                <div class="intro-right-section">
+                    <div class="highlights">
+                        <span class="badge">🔧 Kỹ năng thực hành</span>
+                        <span class="badge">🤝 Tinh thần hợp tác</span>
+                        <span class="badge">💪 Quyết tâm học hỏi</span>
+                        <span class="badge">🚀 Sáng tạo & Cải tiến</span>
+                    </div>
+                    <div class="info-box">
+                        <h4>ℹ️ Thông Tin Cá Nhân</h4>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <strong>👤 Tên:</strong>
+                                Nguyễn Văn Trường
+                            </div>
+                            <div class="info-item">
+                                <strong>🆔 Mã SV:</strong>
+                                25022039
+                            </div>
+                            <div class="info-item">
+                                <strong>🎓 Khóa:</strong>
+                                Năm nhất
+                            </div>
+                            <div class="info-item">
+                                <strong>💻 Ngành:</strong>
+                                Khoa Học Máy Tính
+                            </div>
+                            <div class="info-item">
+                                <strong>🏫 Trường:</strong>
+                                Đại học Công Nghệ - Đại học Quốc gia Hà Nội
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+            </div>
+
+            <!-- Page 2: Projects -->
+            <div class="page" id="page-2">
+                <!-- Projects Section -->
+                <section id="projects">
+            <h2>Danh Sách Bài Tập & Báo Cáo</h2>
+            <p><strong>💡 Nhấp vào mỗi bài để xem nội dung chi tiết</strong></p>
+            <p>Tổng cộng 6 báo cáo trong môn học, thể hiện kỹ năng hợp tác, ứng dụng AI, và tư duy phê phán:</p>
+            
+            <div class="accordion-container">
+                <!-- Bài 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="openDetailPage('page-1-detail')" style="cursor: pointer;">
+                        <div>
+                            <div class="accordion-title">Bài 1: Thao tác cơ bản với tệp tin và thư mục</div>
+                            <div class="accordion-question">Bài tập 1 của mục 1.4 - Cấu trúc thư mục tối ưu và quy tắc đặt tên tệp</div>
+                        </div>
+                        <div class="accordion-toggle">📖</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>
+                                <strong>Trình bày cấu trúc thư mục tối ưu và quy tắc đặt tên tệp đã thiết lập, kèm ảnh chụp minh họa.</strong>
+                            </p>
+                            <h4>📌 Mục tiêu bài tập</h4>
+                            <p>Hiểu cách tổ chức thư mục hợp lý và áp dụng quy tắc đặt tên tệp tin chuẩn để quản lý dữ liệu hiệu quả.</p>
+                            
+                            <h4>📂 Cấu Trúc Thư Mục Tối Ưu</h4>
+                            <ul>
+                                <li><strong>Phân tầng logic:</strong> Documents → Subjects → Assignment → Files</li>
+                                <li><strong>Tách biệt theo loại:</strong> Documents, Images, Videos, Projects</li>
+                                <li><strong>Archive cũ:</strong> Tạo thư mục Archive để lưu dữ liệu cũ</li>
+                            </ul>
+
+                            <h4>🏷️ Quy Tắc Đặt Tên Tệp</h4>
+                            <ul>
+                                <li><strong>Format:</strong> [Date]_[ProjectName]_[Description]_[Version].ext</li>
+                                <li><strong>Ví dụ:</strong> 2024-01-15_Report_Final_v2.docx</li>
+                                <li><strong>Quy tắc:</strong> Không dùng khoảng trắng (dùng _ hoặc -)</li>
+                                <li><strong>Rõ ràng:</strong> Tên file phải mô tả nội dung</li>
+                            </ul>
+
+                            <h4>🎯 Kết quả đạt được</h4>
+                            <ul>
+                                <li>Cấu trúc thư mục rõ ràng, dễ tìm kiếm</li>
+                                <li>Tiết kiệm thời gian khi truy cập tài liệu</li>
+                                <li>Quản lý phiên bản tệp một cách khoa học</li>
+                                <li>Dễ dàng chia sẻ và cộng tác với người khác</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bài 2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="openDetailPage('page-2-detail')" style="cursor: pointer;">
+                        <div>
+                            <div class="accordion-title">Bài 2: Tìm kiếm và đánh giá thông tin học thuật</div>
+                            <div class="accordion-question">Bài tập 2 của mục 2.4 - Tìm kiếm bằng toán tử nâng cao và đánh giá độ tin cậy nguồn</div>
+                        </div>
+                        <div class="accordion-toggle">📖</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>
+                                <strong>Trình bày kết quả tìm kiếm học thuật bằng các toán tử nâng cao và bảng đánh giá nguồn đã thực hiện.</strong>
+                            </p>
+                            <h4>📌 Mục tiêu bài tập</h4>
+                            <p>Rèn luyện kỹ năng tìm kiếm tài liệu học thuật hiệu quả và đánh giá độ tin cậy các nguồn thông tin.</p>
+                            
+                            <h4>🔍 Toán Tử Tìm Kiếm Nâng Cao</h4>
+                            <ul>
+                                <li><strong>Quote ("...")</strong> - Tìm cụm từ chính xác</li>
+                                <li><strong>AND (+)</strong> - Tìm tất cả từ khóa</li>
+                                <li><strong>OR (|)</strong> - Tìm một trong các từ khóa</li>
+                                <li><strong>NOT (-)</strong> - Loại trừ từ khóa nào đó</li>
+                                <li><strong>Wildcard (*)</strong> - Tìm các biến thể từ</li>
+                                <li><strong>Parentheses ()</strong> - Nhóm các điều kiện tìm kiếm</li>
+                            </ul>
+
+                            <h4>📊 Bảng Tiêu Chí Đánh Giá Nguồn</h4>
+                            <ul>
+                                <li><strong>Uy Tín:</strong> Tác giả/xuất bản xã nào? Có bằng cấp chuyên môn?</li>
+                                <li><strong>Độ Mới:</strong> Xuất bản năm nào? Còn phù hợp với lĩnh vực?</li>
+                                <li><strong>Độ Tin Cậy:</strong> Có tham khảo, số liệu cụ thể không?</li>
+                                <li><strong>Mục Đích:</strong> Là nghiên cứu học thuật hay quảng cáo?</li>
+                                <li><strong>Độ Sâu:</strong> Phân tích chi tiết hay chỉ tổng hợp bề ngoài?</li>
+                            </ul>
+
+                            <h4>🎯 Kết quả đạt được</h4>
+                            <ul>
+                                <li>Tìm kiếm tài liệu nhanh chóng và chính xác</li>
+                                <li>Biết cách đánh giá chất lượng nguồn thông tin</li>
+                                <li>Xây dựng thư viện tài liệu uy tín cho bản thân</li>
+                                <li>Nâng cao kỹ năng nghiên cứu học thuật</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bài 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="openDetailPage('page-3-detail')" style="cursor: pointer;">
+                        <div>
+                            <div class="accordion-title">Bài 3: Viết Prompt hiệu quả cho các tác vụ học tập</div>
+                            <div class="accordion-question">Bài tập 2 của mục 3.4 - So sánh Prompt ban đầu và Prompt cải tiến cùng kết quả từ AI</div>
+                        </div>
+                        <div class="accordion-toggle">📖</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>
+                                <strong>Trình bày sự so sánh giữa Prompt ban đầu và Prompt cải tiến cùng kết quả đầu ra từ AI.</strong>
+                            </p>
+                            <h4>📌 Mục tiêu bài tập</h4>
+                            <p>Nắm rõ cách viết prompt hiệu quả để tối ưu hóa output của AI cho các tác vụ học tập.</p>
+                            
+                            <h4>🔄 So Sánh Prompt Ban Đầu vs Prompt Cải Tiến</h4>
+                            <ul>
+                                <li><strong>Prompt Ban Đầu:</strong> "Explain machine learning" → Output: Chung chung, thiếu chi tiết</li>
+                                <li><strong>Prompt Cải Tiến:</strong> "Explain machine learning for beginners in 3 steps with examples" → Output: Rõ ràng, có cấu trúc</li>
+                            </ul>
+
+                            <h4>⚡ Kỹ Thuật Viết Prompt Hiệu Quả</h4>
+                            <ul>
+                                <li><strong>Role-Prompting:</strong> "You are a teacher. Explain...". Kết quả: Ngôn ngữ phù hợp, dễ hiểu</li>
+                                <li><strong>Chain-of-Thought:</strong> "Think step by step. First... Then...". Kết quả: Logic rõ ràng, sâu sắc</li>
+                                <li><strong>Few-Shot:</strong> "Here are examples... Now apply...". Kết quả: Đúng định dạng mong muốn</li>
+                                <li><strong>Constraints:</strong> "Maximum 100 words, bullet points". Kết quả: Output theo yêu cầu</li>
+                            </ul>
+
+                            <h4>💡 Các Phát Hiện Chính</h4>
+                            <ul>
+                                <li>Prompt chi tiết hơn → Output chất lượng hơn</li>
+                                <li>Cung cấp context giúp AI hiểu rõ hơn</li>
+                                <li>Yêu cầu cụ thể định dạng output rất hiệu quả</li>
+                                <li>Cho AI một vai trò cụ thể giúp tôi lại phong cách trả lời</li>
+                            </ul>
+
+                            <h4>🎯 Kết quả đạt được</h4>
+                            <ul>
+                                <li>Viết prompt để đạt kết quả mong muốn</li>
+                                <li>Tiết kiệm thời gian tương tác với AI</li>
+                                <li>Nhận output chất lượng cao ngay từ lần đầu</li>
+                                <li>Nâng cao kỹ năng giao tiếp với AI</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bài 4 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="openDetailPage('page-4-detail')" style="cursor: pointer;">
+                        <div>
+                            <div class="accordion-title">Bài 4: Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm</div>
+                            <div class="accordion-question">Bài tập 3 của mục 4.4 - Minh chứng về sử dụng công cụ quản lý dự án và phối hợp trực tuyến</div>
+                        </div>
+                        <div class="accordion-toggle">📖</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>
+                                <strong>Trình bày minh chứng về việc sử dụng công cụ quản lý dự án nhóm và cách thức phối hợp trực tuyến.</strong>
+                            </p>
+                            <h4>📌 Mục tiêu bài tập</h4>
+                            <p>Thực hành sử dụng các công cụ cộng tác trực tuyến để quản lý dự án nhóm hiệu quả.</p>
+                            
+                            <h4>🛠️ Công Cụ Hợp Tác Được Sử Dụng</h4>
+                            <ul>
+                                <li><strong>Trello</strong> - Quản lý tác vụ, theo dõi tiến độ với Kanban board</li>
+                                <li><strong>Google Docs</strong> - Soạn thảo tài liệu cộng tác, comment, version history</li>
+                                <li><strong>Google Drive</strong> - Lưu trữ tập trung, chia sẻ quyền truy cập</li>
+                                <li><strong>Slack/Teams</strong> - Giao tiếp nhóm realtime, thông báo tức thời</li>
+                                <li><strong>Google Meet</strong> - Họp video, brainstorm, cập nhật tiến độ</li>
+                            </ul>
+
+                            <h4>📋 Cách Thức Phối Hợp</h4>
+                            <ul>
+                                <li><strong>Lập kế hoạch:</strong> Xác định mục tiêu, deadline, phân công rõ</li>
+                                <li><strong>Theo dõi:</strong> Cập nhật status hàng ngày, report tiến độ</li>
+                                <li><strong>Giao tiếp:</strong> Đặt câu hỏi, giải quyết vấn đề promptly</li>
+                                <li><strong>Đánh giá:</strong> Review kết quả, feedback, learning</li>
+                            </ul>
+
+                            <h4>📊 Kết Quả Hợp Tác</h4>
+                            <ul>
+                                <li>Hoàn thành dự án đúng hạn, chất lượng tốt</li>
+                                <li>Tăng hiệu quả làm việc nhóm</li>
+                                <li>Giảm nhầm lẫn, confustion do giao tiếp rõ ràng</li>
+                                <li>Tạo lịch sử dự án, dễ xem lại và học hỏi</li>
+                            </ul>
+
+                            <h4>🎯 Bài Học</h4>
+                            <ul>
+                                <li>Công cụ hợp tác đúng → Dự án thành công</li>
+                                <li>Giao tiếp rõ ràng rất quan trọng</li>
+                                <li>Phân công cụ thể, deadline rõ ràng là chìa khóa</li>
+                                <li>Lắng nghe và hỗ trợ lẫn nhau cải thiện chất lượng</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bài 5 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="openDetailPage('page-5-detail')" style="cursor: pointer;">
+                        <div>
+                            <div class="accordion-title">Bài 5: Sử dụng AI tạo sinh để hỗ trợ sáng tạo nội dung</div>
+                            <div class="accordion-question">Bài tập 2 của mục 5.4 - Sản phẩm nội dung số (hình ảnh, video, bài viết) được hỗ trợ bởi AI</div>
+                        </div>
+                        <div class="accordion-toggle">📖</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>
+                                <strong>Trường bày sản phẩm nội dung số hoàn thiện (hình ảnh, video hoặc bài viết) được hỗ trợ bởi AI.</strong>
+                            </p>
+                            <h4>📌 Mục tiêu bài tập</h4>
+                            <p>Sáng tạo nội dung số chất lượng cao bằng cách kết hợp AI và kỹ năng con người.</p>
+                            
+                            <h4>🎨 Các Loại Nội Dung Sáng Tạo</h4>
+                            <ul>
+                                <li><strong>Hình ảnh:</strong> Dùng DALL-E, Midjourney, Stable Diffusion để tạo ảnh minh họa</li>
+                                <li><strong>Video:</strong> Dùng Synthesia, HeyGen để tạo avatar video, voice-over</li>
+                                <li><strong>Bài Viết:</strong> Dùng ChatGPT, Jasper để viết article, blog post</li>
+                                <li><strong>Audio:</strong> Dùng ElevenLabs, Google TTS để tạo voice-over</li>
+                                <li><strong>Thiết Kế:</strong> Dùng Canva AI, Adobe Firefly để thiết kế poster, banner</li>
+                            </ul>
+
+                            <h4>🔄 Quy Trình Sáng Tạo Nội Dung</h4>
+                            <ul>
+                                <li><strong>Bước 1: Lập ý tưởng</strong> - Xác định chủ đề, mục tiêu, đối tượng</li>
+                                <li><strong>Bước 2: Viết prompt</strong> - Mô tả chi tiết nội dung mong muốn cho AI</li>
+                                <li><strong>Bước 3: AI tạo</strong> - Sử dụng AI tools tạo nội dung ban đầu</li>
+                                <li><strong>Bước 4: Chỉnh sửa</strong> - Con người review, edit, cải tiến</li>
+                                <li><strong>Bước 5: Công bố</strong> - Xuất bản, chia sẻ kèm credit AI</li>
+                            </ul>
+
+                            <h4>✨ Kết Quả Nội Dung</h4>
+                            <ul>
+                                <li>Nội dung chất lượng cao, chuyên nghiệp</li>
+                                <li>Tạo nhanh hơn so với phương pháp truyền thống</li>
+                                <li>Nhiều lựa chọn, dễ customize theo ý muốn</li>
+                                <li>Tiết kiệm chi phí thuê designer, videographer</li>
+                            </ul>
+
+                            <h4>🎯 Bài Học</h4>
+                            <ul>
+                                <li>AI là công cụ sáng tạo, không thay thế con người</li>
+                                <li>Prompt chi tiết → Output tốt hơn</li>
+                                <li>Kết hợp AI + sáng tạo con người = tối ưu</li>
+                                <li>Luôn công bố khi sử dụng AI (transparency)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bài 6 -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="openDetailPage('page-6-detail')" style="cursor: pointer;">
+                        <div>
+                            <div class="accordion-title">Bài 6: Sử dụng AI có trách nhiệm trong học tập và nghiên cứu</div>
+                            <div class="accordion-question">Bài tập 4 của mục 6.4 - Bộ nguyên tắc cá nhân về sử dụng AI có trách nhiệm</div>
+                        </div>
+                        <div class="accordion-toggle">📖</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>
+                                <strong>Trình bày bộ nguyên tắc cá nhân về sử dụng AI có trách nhiệm dựa trên các nghiên cứu đã thực hiện.</strong>
+                            </p>
+                            <h4>📌 Mục tiêu bài tập</h4>
+                            <p>Xây dựng bộ nguyên tắc đạo đức cá nhân cho việc sử dụng AI trong học tập và nghiên cứu.</p>
+                            
+                            <h4>⚖️ Năm Nguyên Tắc Cơ Bản</h4>
+                            <ul>
+                                <li><strong>1. Transparency (Minh Bạch):</strong> 
+                                    <ul>
+                                        <li>Công khai khi sử dụng AI trong bài tập, báo cáo</li>
+                                        <li>Ghi danh sách công cụ AI được sử dụng</li>
+                                        <li>Không giấu giếm hoặc trình bày AI output như chính mình tạo</li>
+                                    </ul>
+                                </li>
+                                <li><strong>2. Accountability (Chịu Trách Nhiệm):</strong> 
+                                    <ul>
+                                        <li>Chịu trách nhiệm cho output cuối cùng</li>
+                                        <li>Review kỹ kết quả từ AI trước khi nộp</li>
+                                        <li>Sửa lỗi, thiên lệch từ AI nếu phát hiện</li>
+                                    </ul>
+                                </li>
+                                <li><strong>3. Integrity (Chính Trực):</strong> 
+                                    <ul>
+                                        <li>Không sử dụng AI để gian lận, copy bài</li>
+                                        <li>AI là công cụ hỗ trợ, không thay thế học tập</li>
+                                        <li>Hiểu và giải thích được nội dung sử dụng AI</li>
+                                    </ul>
+                                </li>
+                                <li><strong>4. Independence (Độc Lập Tư Duy):</strong> 
+                                    <ul>
+                                        <li>Luôn suy nghĩ, phân tích độc lập</li>
+                                        <li>Không hoàn toàn phụ thuộc vào AI</li>
+                                        <li>Phát triển kỹ năng con người, không atrophy</li>
+                                    </ul>
+                                </li>
+                                <li><strong>5. Privacy (Bảo Vệ Riêng Tư):</strong> 
+                                    <ul>
+                                        <li>Không chia sẻ thông tin cá nhân cho AI</li>
+                                        <li>Cẩn thận với dữ liệu nhạy cảm khi input</li>
+                                        <li>Kiểm tra chính sách privacy của AI tool</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h4>🎓 Bộ Quy Tắc Thực Hành</h4>
+                            <ul>
+                                <li><strong>✅ Chấp Nhận Được:</strong> Dùng AI để brainstorm, viết outline, giải thích khái niệm khó</li>
+                                <li><strong>✅ Chấp Nhận Được:</strong> Dùng AI để review, edit, cải thiện bài viết</li>
+                                <li><strong>✅ Chấp Nhận Được:</strong> Dùng AI để tìm tài liệu, tóm tắt nội dung</li>
+                                <li><strong>❌ Không Chấp Nhận:</strong> Nộp AI output nguyên vẹn như là chính mình</li>
+                                <li><strong>❌ Không Chấp Nhận:</strong> Dùng AI để làm toàn bộ bài tập</li>
+                                <li><strong>❌ Không Chấp Nhận:</strong> Giấu giếm việc dùng AI</li>
+                            </ul>
+
+                            <h4>🎯 Lợi Ích của Nguyên Tắc Này</h4>
+                            <ul>
+                                <li>Phát triển kỹ năng thực sự, không lệ thuộc AI</li>
+                                <li>Xây dựng uy tín, không lo bị phát hiện gian lận</li>
+                                <li>Học cách sử dụng AI một cách khôn ngoan</li>
+                                <li>Chuẩn bị tốt cho tương lai khi AI phổ biến hơn</li>
+                            </ul>
+
+                            <h4>💭 Kết Luận</h4>
+                            <p>AI là công cụ mạnh mẽ nhưng cần sử dụng có trách nhiệm. Không phải mọi cách dùng AI đều được chấp nhận, nhưng nếu tuân thủ nguyên tắc này, có thể sử dụng AI để tối ưu hóa học tập mà vẫn phát triển kỹ năng thực sự.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+            </div>
+
+            <!-- Page 1 Detail: Bài Thực Hành -->
+            <div class="page" id="page-1-detail">
+                <section style="padding: 20px 0 40px 0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;">
+                        <h2 style="margin: 0;">Bài 1: Thao Tác Cơ Bản Với Tệp Tin và Thư Mục</h2>
+                        <button class="pagination-btn" onclick="backToList()" style="margin: 0;">← Quay Lại</button>
+                    </div>
+
+                    <div class="glass" style="padding: 25px; border-radius: 8px;">
+                        <h3>1. Mục tiêu bài tập</h3>
+                        <p>Xây dựng hệ thống lưu trữ khoa học, phân cấp luận lý rõ ràng nhằm tối ưu hóa tốc độ tìm kiếm tài liệu học tập.</p>
+                        <p>Thiết lập quy tắc đặt tên tệp nhất quán, loại bỏ rủi ro trùng lặp hoặc mất mát dữ liệu trong suốt quá trình học tập tại giảng đường Đại học.</p>
+
+                        <h3 style="margin-top: 20px;">2. Tóm tắt quá trình thực hiện</h3>
+                        <p><strong>Bước 1 (Khảo sát và Phân loại):</strong> Tiến hành khảo sát toàn bộ danh mục môn học trong học kỳ và phân loại tài liệu thành 3 nhóm chính dựa trên mục đích sử dụng: Tài liệu giảng đường (Lectures), Bài tập cá nhân/nhóm (Assignments), và Tài nguyên tham khảo (References).</p>
+                        <p><strong>Bước 2 (Khởi tạo cấu trúc cây):</strong> Khởi tạo cấu trúc thư mục dạng cây (Tree Structure) trên phân vùng ổ đĩa học tập chuyên dụng. Thư mục gốc được đặt tên theo năm học, phân nhánh xuống từng học kỳ và chi tiết đến từng môn học cụ thể để đảm bảo tính phân tầng logic.</p>
+                        <p><strong>Bước 3 (Chuẩn hóa quy tắc đặt tên):</strong> Định hình bộ quy tắc đặt tên tệp chuẩn (Naming Convention) phục vụ cho việc lưu trữ lâu dài theo cấu trúc quy ước: [MãMônHọc]_[TênNộiDung]_[PhiênBản]_[NgàyTạo]. Quy định rõ không sử dụng tiếng Việt có dấu, không dùng khoảng trắng (thay bằng dấu gạch dưới _), kiểm soát phiên bản bằng ký hiệu v1, v2, Final.</p>
+
+                        <h3 style="margin-top: 20px;">3. Sản phẩm cuối cùng</h3>
+                        <p>Sản phẩm cuối cùng: file PDF minh họa (đã đính kèm bên dưới).</p>
+
+                        <div style="background: #f7f7f7; padding: 10px; border-radius: 6px; margin-top: 12px;">
+                            <object data="Bai_1.pdf" type="application/pdf" width="100%" height="800">
+                                <p>Trình duyệt của bạn không hỗ trợ hiển thị PDF. <a href="Bai_1.pdf" target="_blank">Tải xuống Bai_1.pdf</a></p>
+                            </object>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 2 Detail: Bài 2 -->
+            <div class="page" id="page-2-detail">
+                <section style="padding: 20px 0 40px 0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;">
+                        <h2 style="margin: 0;">Bài 2: Tìm kiếm và đánh giá thông tin học thuật</h2>
+                        <button class="pagination-btn" onclick="backToList()" style="margin: 0;">← Quay Lại</button>
+                    </div>
+
+                    <div class="glass" style="padding: 25px; border-radius: 8px;">
+                        <h3>1. Mục tiêu bài tập</h3>
+                        <p>Ứng dụng thành thạo các toán tử tìm kiếm nâng cao (Boolean operators) để khai thác chính xác nguồn tài liệu học thuật từ cơ sở dữ liệu lớn (Google Scholar, ResearchGate). Xây dựng tư duy phản biện thông qua bộ tiêu chí đánh giá độ tin cậy (Mô hình CRAAP) của tài liệu trước khi đưa vào bài nghiên cứu.</p>
+
+                        <h3 style="margin-top: 20px;">2. Tóm tắt quá trình thực hiện</h3>
+                        <p><strong>Bước 1 (Xác định từ khóa):</strong> Xác định chủ đề nghiên cứu cụ thể, ví dụ: "Ứng dụng trí tuệ nhân tạo trong giáo dục đại học", sau đó bóc tách thành các từ khóa chính và từ khóa đồng nghĩa.</p>
+                        <p><strong>Bước 2 (Xây dựng chuỗi truy vấn):</strong> Thiết lập chuỗi truy vấn nâng cao bằng cách kết hợp từ khóa với các toán tử logic như: Dấu ngoặc kép "" (tìm cụm từ chính xác), toán tử AND, OR, và toán tử lọc định dạng filetype:pdf nhằm loại bỏ các bài viết báo chí phổ thông, chỉ giữ lại bài báo khoa học đã qua bình duyệt.</p>
+                        <p><strong>Bước 3 (Đánh giá nguồn tin):</strong> Lựa chọn ra các tài liệu tiêu biểu từ kết quả tìm kiếm và đưa vào ma trận đối chiếu, đánh giá mức độ uy tín dựa trên bộ tiêu chí CRAAP: Tính cập nhật (Currency), Tính liên quan (Relevance), Thẩm quyền tác giả/nhà xuất bản (Authority), Tính chính xác của dữ liệu (Accuracy), và Mục đích xuất bản (Purpose).</p>
+
+                        <h3 style="margin-top: 20px;">3. Sản phẩm cuối cùng</h3>
+                        <p>Sản phẩm cuối cùng: file PDF minh họa (đã đính kèm bên dưới).</p>
+
+                        <div style="background: #f7f7f7; padding: 10px; border-radius: 6px; margin-top: 12px;">
+                            <object data="Bai_2.pdf" type="application/pdf" width="100%" height="800">
+                                <p>Trình duyệt của bạn không hỗ trợ hiển thị PDF. <a href="Bai_2.pdf" target="_blank">Tải xuống Bai_2.pdf</a></p>
+                            </object>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 4 Detail: Bài 3 -->
+            <div class="page" id="page-3-detail">
+                <section style="padding: 20px 0 40px 0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;">
+                        <h2 style="margin: 0;">Bài 3: Viết Prompt hiệu quả cho các tác vụ học tập</h2>
+                        <button class="pagination-btn" onclick="backToList()" style="margin: 0;">← Quay Lại</button>
+                    </div>
+
+                    <div class="glass" style="padding: 25px; border-radius: 8px;">
+                        <h3>1. Mục tiêu bài tập</h3>
+                        <p>Làm chủ kỹ thuật Kỹ nghệ gợi ý (Prompt Engineering) để tương tác tối ưu với AI tạo sinh (ChatGPT, Claude, Gemini). Khắc phục hiện tượng AI trả lời chung chung hoặc sai lệch (Hallucination) bằng cách thiết lập ngữ cảnh và cấu trúc đầu ra nghiêm ngặt.</p>
+
+                        <h3 style="margin-top: 20px;">2. Tóm tắt quá trình thực hiện</h3>
+                        <p><strong>Bước 1 (Thử nghiệm prompt sơ khai):</strong> Đưa ra một câu lệnh ngắn gọn, sơ khai (Naive Prompt) thiếu ngữ cảnh (Ví dụ: "Giải thích cho tôi về thuật toán Quick Sort") để kiểm tra và ghi nhận giới hạn phản hồi mặc định mang tính chung chung của AI.</p>
+                        <p><strong>Bước 2 (Xây dựng prompt cải tiến):</strong> Tái cấu trúc lại câu lệnh dựa trên bộ khung kỹ nghệ chuyên nghiệp bao gồm đầy đủ thành phần: Vai trò (Role) → Ngữ cảnh (Context) → Nhiệm vụ cụ thể (Task) → Giới hạn/Yêu cầu (Constraints) → Định dạng đầu ra mong muốn (Output Format).</p>
+                        <p><strong>Bước 3 (Đối chiếu và Phân tích):</strong> Tiến hành đối chiếu, phân tích sâu sự khác biệt về chất lượng dữ liệu, tư duy logic, mức độ bám sát yêu cầu và tính ứng dụng thực tế giữa hai kết quả đầu ra mà AI phản hồi.</p>
+
+                        <h3 style="margin-top: 20px;">3. Sản phẩm cuối cùng</h3>
+                        <p>Sản phẩm cuối cùng: file PDF minh họa (đã đính kèm bên dưới).</p>
+
+                        <div style="background: #f7f7f7; padding: 10px; border-radius: 6px; margin-top: 12px;">
+                            <object data="Bai_3.pdf" type="application/pdf" width="100%" height="800">
+                                <p>Trình duyệt của bạn không hỗ trợ hiển thị PDF. <a href="Bai_3.pdf" target="_blank">Tải xuống Bai_3.pdf</a></p>
+                            </object>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 5 Detail: Bài 4 -->
+            <div class="page" id="page-4-detail">
+                <section style="padding: 20px 0 40px 0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;">
+                        <h2 style="margin: 0;">Bài 4: Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm</h2>
+                        <button class="pagination-btn" onclick="backToList()" style="margin: 0;">← Quay Lại</button>
+                    </div>
+
+                    <div class="glass" style="padding: 25px; border-radius: 8px;">
+                        <h3>1. Mục tiêu bài tập</h3>
+                        <p>Tối ưu hóa quy trình làm việc nhóm từ xa bằng các công cụ quản trị kỹ thuật số chuyên dụng (Trello/Notion, Google Workspace). Minh bạch hóa tiến độ, phân tách trách nhiệm rõ ràng cho từng thành viên, loại bỏ việc chậm trễ tiến độ dự án (Deadlines).</p>
+
+                        <h3 style="margin-top: 20px;">2. Tóm tắt quá trình thực hiện</h3>
+                        <p><strong>Bước 1 (Khởi động dự án):</strong> Tổ chức cuộc họp khởi động dự án nhóm qua Google Meet để thảo luận, thống nhất mục tiêu tổng quát, phân chia vai trò và chia nhỏ dự án thành các đầu việc (Tasks) cụ thể.</p>
+                        <p><strong>Bước 2 (Thiết lập không gian Kanban):</strong> Khởi tạo không gian làm việc chung trên nền tảng Trello/Notion theo mô hình Kanban. Xây dựng các cột trạng thái luồng công việc trực quan bao gồm: Cần làm (To-do), Đang làm (In Progress), Kiểm thử/Đánh giá (Review), và Hoàn thành (Done).</p>
+                        <p><strong>Bước 3 (Vận hành và Cộng tác trực tuyến):</strong> Gán tài khoản thành viên chịu trách nhiệm, thiết lập thời hạn hoàn thành (Due date) cho từng task cụ thể trên bảng quản trị. Đồng thời, thiết lập thư mục lưu trữ chung trên Google Drive và sử dụng Google Docs để đồng biên tập tài liệu theo thời gian thực (Real-time Co-authoring), kết hợp tính năng bình luận (Comment) để trao đổi trực tiếp.</p>
+
+                        <h3 style="margin-top: 20px;">3. Sản phẩm cuối cùng</h3>
+                        <p>Sản phẩm cuối cùng: file PDF minh họa (đã đính kèm bên dưới).</p>
+
+                        <div style="background: #f7f7f7; padding: 10px; border-radius: 6px; margin-top: 12px;">
+                            <object data="Bai_4.pdf" type="application/pdf" width="100%" height="800">
+                                <p>Trình duyệt của bạn không hỗ trợ hiển thị PDF. <a href="Bai_4.pdf" target="_blank">Tải xuống Bai_4.pdf</a></p>
+                            </object>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 6 Detail: Bài 5 -->
+            <div class="page" id="page-5-detail">
+                <section style="padding: 20px 0 40px 0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;">
+                        <h2 style="margin: 0;">Bài 5: Sử dụng AI tạo sinh để hỗ trợ sáng tạo nội dung</h2>
+                        <button class="pagination-btn" onclick="backToList()" style="margin: 0;">← Quay Lại</button>
+                    </div>
+
+                    <div class="glass" style="padding: 25px; border-radius: 8px;">
+                        <h3>1. Mục tiêu bài tập</h3>
+                        <p>Kết hợp nhuần nhuyễn giữa tư duy thẩm mỹ/sáng tạo của con người và tốc độ thực thi của AI nhằm sản xuất một sản phẩm truyền thông số chất lượng cao. Hiểu rõ quy trình giám sát chất lượng sản phẩm từ khâu ý tưởng, tinh chỉnh cho đến khi hoàn thiện sản phẩm thương mại cuối cùng.</p>
+
+                        <h3 style="margin-top: 20px;">2. Tóm tắt quá trình thực hiện</h3>
+                        <p><strong>Bước 1 (Lên ý tưởng gốc):</strong> Xây dựng ý tưởng chủ đề, mục tiêu truyền thông và kịch bản cấu trúc gốc cho một sản phẩm nội dung số (Ví dụ: Một bài viết chuyên sâu trên Blog kết hợp hình ảnh minh họa độc bản về công nghệ).</p>
+                        <p><strong>Bước 2 (Phối hợp với công cụ AI):</strong> Sử dụng AI văn bản (ChatGPT) để hỗ trợ tìm kiếm bộ từ khóa tối ưu, lên dàn ý chi tiết và gợi ý câu từ. Tiếp tục sử dụng AI hình ảnh (Midjourney/DALL-E) để sinh chuỗi ảnh minh họa dựa trên các đoạn mô tả kỹ thuật (Prompts) đồng bộ với nội dung bài viết.</p>
+                        <p><strong>Bước 3 (Biên tập và Thiết kế hậu kỳ):</strong> Tiến hành kiểm tra, trực tiếp chỉnh sửa các nội dung chữ và lỗi chi tiết hình ảnh từ sản phẩm thô của AI để đảm bảo tính chính xác và thẩm mỹ. Cuối cùng, thực hiện thiết kế layout, dàn trang và đóng gói sản phẩm hoàn thiện bằng công cụ Canva.</p>
+
+                        <h3 style="margin-top: 20px;">3. Sản phẩm cuối cùng</h3>
+                        <p>Sản phẩm cuối cùng: file PDF minh họa (đã đính kèm bên dưới).</p>
+
+                        <div style="background: #f7f7f7; padding: 10px; border-radius: 6px; margin-top: 12px;">
+                            <object data="Bai_5.pdf" type="application/pdf" width="100%" height="800">
+                                <p>Trình duyệt của bạn không hỗ trợ hiển thị PDF. <a href="Bai_5.pdf" target="_blank">Tải xuống Bai_5.pdf</a></p>
+                            </object>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 7 Detail: Bài 6 -->
+            <div class="page" id="page-6-detail">
+                <section style="padding: 20px 0 40px 0;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px;">
+                        <h2 style="margin: 0;">Bài 6: Sử dụng AI có trách nhiệm trong học tập và nghiên cứu</h2>
+                        <button class="pagination-btn" onclick="backToList()" style="margin: 0;">← Quay Lại</button>
+                    </div>
+
+                    <div class="glass" style="padding: 25px; border-radius: 8px;">
+                        <h3>1. Mục tiêu bài tập</h3>
+                        <p>Xác lập ranh giới đạo đức rõ ràng giữa "Hỗ trợ học tập bằng AI" và "Gian lận học thuật bằng AI". Xây dựng bộ quy tắc ứng xử cốt lõi nhằm bảo vệ tính chính chính trực khoa học của bản thân trước xu hướng bùng nổ của công nghệ trí tuệ nhân tạo.</p>
+
+                        <h3 style="margin-top: 20px;">2. Tóm tắt quá trình thực hiện</h3>
+                        <p><strong>Bước 1 (Nghiên cứu quy định đạo đức):</strong> Tìm hiểu và nghiên cứu các văn bản pháp lý, quy định của nhà trường cùng hướng dẫn từ các tổ chức giáo dục uy tín quốc tế về việc duy trì liêm chính học thuật trong kỷ nguyên công nghệ số.</p>
+                        <p><strong>Bước 2 (Xây dựng khung nguyên tắc):</strong> Đúc kết hành vi ứng xử của bản thân khi tương tác với công nghệ thành 4 nhóm nguyên tắc cốt lõi: Tính Minh bạch (Transparency), Trách nhiệm giải trình (Accountability), Tính Bảo mật dữ liệu (Privacy), và Duy trì tư duy Độc lập (Independence).</p>
+                        <p><strong>Bước 3 (Hiện thực hóa thành quy trình):</strong> Chuyển đổi bộ nguyên tắc đạo đức thành bảng kiểm tra hành vi bắt buộc (Checklist) để tự rà soát lại bài làm trước khi nộp, bao gồm việc chuẩn hóa cấu trúc phụ lục trích dẫn công cụ AI (AI Citation) đối với các nội dung có sự hỗ trợ từ công nghệ.</p>
+
+                        <h3 style="margin-top: 20px;">3. Sản phẩm cuối cùng</h3>
+                        <p>Sản phẩm cuối cùng: file PDF minh họa (đã đính kèm bên dưới).</p>
+
+                        <div style="background: #f7f7f7; padding: 10px; border-radius: 6px; margin-top: 12px;">
+                            <object data="Bai_6.pdf" type="application/pdf" width="100%" height="800">
+                                <p>Trình duyệt của bạn không hỗ trợ hiển thị PDF. <a href="Bai_6.pdf" target="_blank">Tải xuống Bai_6.pdf</a></p>
+                            </object>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Page 3: Summary -->
+            <div class="page" id="page-3">
+                <!-- Summary Section -->
+                <section id="summary">
+            <h2>Tổng Kết & Cảm Nhận</h2>
+            <div class="summary-content">
+                <h3>🎓 Những Bài Học Quý Báu</h3>
+                
+                <div class="reflection-box">
+                    <p>Thông qua chuỗi bài tập thực hành mang tính thực tiễn cao, tôi đã có cơ hội tiếp cận toàn diện với nhiều khía cạnh cốt lõi của công nghệ, từ các kỹ năng thao tác nền tảng đến tư duy hệ thống nâng cao. Mỗi học phần không chỉ trang bị cho tôi những tri thức giá trị, mà còn đặt nền móng vững chắc cho lộ trình phát triển sự nghiệp lâu dài trong tương lai.</p>
+                </div>
+
+                <div class="reflection-box">
+                    <p><strong>Các năng lực cốt lõi đã định hình:</strong><br>Tư duy phân tích hệ thống, kỹ năng quản trị và giải quyết các tình huống kỹ thuật phức tạp, năng lực cộng tác trực tuyến và giao tiếp hiệu quả đa nền tảng. Đặc biệt, tôi đã làm chủ kỹ thuật tối ưu hóa câu lệnh (Prompt Engineering), đồng thời hình thành nhận thức sâu sắc về việc ứng dụng AI một cách sáng tạo và có trách nhiệm.</p>
+                </div>
+
+                <div class="reflection-box">
+                    <p><strong>Đối diện thách thức &amp; Trưởng thành:</strong><br>Thực tế triển khai dự án không phải lúc nào cũng thuận lợi, nhưng chính những rào cản và lỗi hệ thống phát sinh đã rèn luyện cho tôi tinh thần kiên trì, kích thích tư duy sáng tạo độc lập và định hình thói quen luôn tìm kiếm giải pháp tối ưu nhất cho mọi vấn đề.</p>
+                </div>
+
+                <div class="contact-links">
+                    <a href="mailto:student25022039@example.com" class="contact-link">📧 Email</a>
+                    <a href="#" class="contact-link">💼 LinkedIn</a>
+                    <a href="#" class="contact-link">🐙 GitHub</a>
+                    <a href="#" class="contact-link">🌐 Website</a>
+                </div>
+            </div>
+        </section>
+            </div>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button class="pagination-btn" id="prevBtn" onclick="previousPage()" disabled>
+                ← Trang Trước
+            </button>
+            <div class="pagination-info">
+                Trang <span id="currentPage">1</span> / <span>3</span>
+            </div>
+            <button class="pagination-btn" id="nextBtn" onclick="nextPage()">
+                Trang Tiếp →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Portfolio Kỹ Thuật Số - Nguyễn Văn Trường (25022039)</p>
+        <div class="footer-divider"></div>
+        <p>Khoa Học Máy Tính | Năm nhất | 2026</p>
+        <div class="header-credit">Sản phẩm có sự đóng góp và hỗ trợ của<br>Google Gemini và Claude Agent</div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        let currentPage = 1;
+        const totalPages = 3;
+
+        function showPage(pageNum) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(`page-${pageNum}`).classList.add('active');
+
+            // Update page indicator
+            document.getElementById('currentPage').textContent = pageNum;
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = pageNum === 1;
+            document.getElementById('nextBtn').disabled = pageNum === totalPages;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+
+        // Detail Page Navigation
+        function openDetailPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show detail page
+            document.getElementById(pageId).classList.add('active');
+
+            // Hide pagination controls
+            document.querySelector('.pagination').style.display = 'none';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToList() {
+            // Show pagination controls
+            document.querySelector('.pagination').style.display = 'flex';
+
+            // Return to page 2 (projects)
+            currentPage = 2;
+            showPage(currentPage);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.querySelector('.pagination').style.display !== 'none') {
+                if (e.key === 'ArrowRight') nextPage();
+                if (e.key === 'ArrowLeft') previousPage();
+            }
+        });
+
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            // Lấy nội dung accordion
+            const content = header.nextElementSibling;
+            const isActive = content.classList.contains('active');
+
+            // Đóng tất cả accordion khác
+            document.querySelectorAll('.accordion-content.active').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('active');
+                    item.previousElementSibling.classList.remove('active');
+                }
+            });
+
+            // Toggle accordion hiện tại
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+
+            // Smooth scroll nếu cần
+            if (!isActive) {
+                setTimeout(() => {
+                    header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>
